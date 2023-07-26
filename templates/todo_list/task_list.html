@@ -1,0 +1,57 @@
+{% extends "base.html" %}
+{% load crispy_forms_filters %}
+
+{% block content %}
+    <div class="row" style="padding-top: 20px">
+      <div class="col-md-5">
+        <h1>TODO List</h1>
+      </div>
+      <div class="col-md-4">
+        <form action="" method="get" class="form-inline">
+          {{ search_form|crispy }}
+          <input type="submit" value="Search" class="btn btn-secondary">
+        </form>
+
+      </div>
+        <div class="col-md-1">
+          <a href="{% url "todo_list:task-create" %}" class="btn btn-primary">
+            Create
+          </a>
+        </div>
+    </div>
+    {% if task_list %}
+      <div class="ml-8">
+        {% for task in task_list %}
+          <hr>
+          <div class="row" style="padding-top: 20px">
+            <div class="col-md-9">
+              <h5>{{ task.content }}
+                <span class="{% if task.completed %}green{% else %}red{% endif %}">{{ task }}</span>
+              </h5>
+            </div>
+              <div class="col-md-1">
+                {% if task.completed %}
+                  <a href="{% url 'todo_list:task-toggle' pk=task.id %}" class="btn btn-secondary link-to-page">
+                    Undo
+                  </a>
+                {% else %}
+                  <a href="{% url 'todo_list:task-toggle' pk=task.id %}" class="btn btn-success link-to-page">
+                    Complete
+                  </a>
+                {% endif %}
+              </div>
+          </div>
+          <h5>
+          </h5>
+          <p><strong>Created at:</strong> {{ task.created_at }}</p>
+          <p><strong>Tags: </strong>{% for tag in task.tags.all %}{{ tag.name }} {% endfor %}</p>
+          <a href="{% url "todo_list:task-update" pk=task.id %}" class="btn btn-primary">Update</a>
+          <a href="{% url "todo_list:task-delete" pk=task.id %}" class="btn btn-danger">Delete</a>
+        {% endfor %}
+        <hr>
+      </div>
+    {% else %}
+      <p>There are no tasks!</p>
+    {% endif %}
+{% endblock %}
+
