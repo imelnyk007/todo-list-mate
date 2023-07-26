@@ -3,7 +3,7 @@ from django.shortcuts import render
 from django.urls import reverse_lazy
 from django.views import generic
 
-from todo_list.forms import TaskForm
+from todo_list.forms import TaskForm, TaskSearchForm
 from todo_list.models import Tag, Task
 
 
@@ -32,6 +32,25 @@ class TagDeleteView(generic.DeleteView):
 class TaskListView(generic.ListView):
     model = Task
     paginate_by = 4
+
+    def get_context_data(self, *, object_list=None, **kwargs):
+        context = super(TaskListView, self).get_context_data(**kwargs)
+
+        content = self.request.GET.get("content", "")
+        context["search_form"] = TaskSearchForm(
+            initial={"content": content}
+        )
+
+        return context
+
+    def get_queryset(self):
+        queryset = Task.objects.all()
+        form = TaskSearchForm(self.request.GET)
+
+        if form.is_valid():
+            return queryset.filter(content__icontains=form.cleaned_data["content"])
+
+        return queryset
 
 
 class TaskCreateView(generic.CreateView):

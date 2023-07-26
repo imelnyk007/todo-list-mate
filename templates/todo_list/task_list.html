@@ -1,9 +1,17 @@
 {% extends "base.html" %}
+{% load crispy_forms_filters %}
 
 {% block content %}
     <div class="row" style="padding-top: 20px">
-      <div class="col-md-9">
+      <div class="col-md-5">
         <h1>TODO List</h1>
+      </div>
+      <div class="col-md-4">
+        <form action="" method="get" class="form-inline">
+          {{ search_form|crispy }}
+          <input type="submit" value="Search" class="btn btn-secondary">
+        </form>
+
       </div>
         <div class="col-md-1">
           <a href="{% url "todo_list:task-create" %}" class="btn btn-primary">
