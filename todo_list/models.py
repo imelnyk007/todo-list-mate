@@ -21,4 +21,4 @@ class Task(models.Model):
         ordering = ["-completed", "-created_at"]
 
     def __str__(self):
-        return self.content
+        return f"{'Done' if self.completed else 'Not done'}"
