@@ -31,7 +31,7 @@ class TagDeleteView(generic.DeleteView):
 
 class TaskListView(generic.ListView):
     model = Task
-    paginate_by = 5
+    paginate_by = 4
 
 
 class TaskCreateView(generic.CreateView):
