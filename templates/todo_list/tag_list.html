@@ -1,12 +1,16 @@
 {% extends "base.html" %}
 
 {% block content %}
-  <h1>
-    Tag list:
-    <a href="{% url "todo_list:tag-create" %}" class="btn btn-primary link-to-page">
-      Create
-    </a>
-  </h1>
+  <div class="row" style="padding-top: 20px">
+      <div class="col-md-9">
+        <h1>Tag list</h1>
+      </div>
+        <div class="col-md-1">
+          <a href="{% url "todo_list:tag-create" %}" class="btn btn-primary link-to-page">
+            Create
+          </a>
+        </div>
+    </div>
 
   {% if tag_list %}
     <table class="table">
