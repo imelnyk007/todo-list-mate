@@ -1,3 +1,14 @@
-{% for tag in tag_list %}
-  <p>{{ tag.name }}</p>
-{% endfor %}
+{% extends "base.html" %}
+
+{% block content %}
+  <h1>
+    Tag list:
+    <a href="#" class="btn btn-primary link-to-page">
+      Create
+    </a>
+  </h1>
+  {% for tag in tag_list %}
+    <p>{{ tag.name }}</p>
+  {% endfor %}
+{% endblock %}
+
