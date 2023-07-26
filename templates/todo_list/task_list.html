@@ -3,13 +3,17 @@
 {% block content %}
   <h1>
     TODO list
-    <a href="#" class="btn btn-primary link-to-page">
+    <a href="{% url "todo_list:task-create" %}" class="btn btn-primary link-to-page">
       Create
     </a>
   </h1>
   {% if task_list %}
     {% for task in task_list %}
-      <p><strong>{{ task.content }}</strong></p>
+      <p><strong>{{ task.content }}
+        <a href="{% url "todo_list:task-update" pk=task.id%}">
+          Update
+        </a>
+      </strong></p>
       {% if task.completed %}
         <p style="color: darkgreen">Done</p>
       {% else %}
